@@ -28,16 +28,30 @@ setInterval(function() {
 }
 ,60000);
 
+function display() {
+  $.getJSON('http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=d727cf36965f8e122b4ee4a658725da2',
+    function(data) {
+      console.dir(data);
+      console.dir(data.weather[0].description);
+      $('#display').text("Weather : " + data.weather[0].description + " Wind speed is : " +data.wind.speed);
+    }
+  );
+}
+function displayWikipedia(str) {
+   $.getJSON("https://en.wikipedia.org/w/api.php?action=opensearch&limit=1&format=json&search="+encodeURI(str)+"&callback=?",
+    function(data) {
+      console.dir(data);
+    }
+  );
+}
+function displayQuotes() {
+  $.getJSON("http://quotesondesign.com/wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1&callback=?", 
+    function(a) {
+         console.dir(a);
+  }); 
+}
 
-  
-  function display() {
-    /* displays the weather description given by the requested JSON object */
-    $.getJSON('http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=d727cf36965f8e122b4ee4a658725da2',
-      function(data) {
-        console.dir(data);
-        $('#display').text(data.weather[0].description);
-        $('#display').text(data.wind.speed);
-      }
-    );
-  }
+
 display();
+displayWikipedia("Narendra Modi");
+displayQuotes();
